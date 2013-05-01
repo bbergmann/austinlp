@@ -1,0 +1,48 @@
+#server
+#!/usr/local/bin/python
+ 
+import BaseHTTPServer
+import CGIHTTPServer
+import cgitb; cgitb.enable()  
+ 
+server = BaseHTTPServer.HTTPServer
+handler = CGIHTTPServer.CGIHTTPRequestHandler
+server_address = ("localhost", 8022)
+handler.cgi_directories = ["/cgi-bin"]
+httpd = server(server_address, handler)
+httpd.serve_forever()
+
+#index.html --------------------------------------------
+<h1>Home</h1>
+
+<a href="http://localhost:8022/cgi-bin/form.py">Do you want to play?</a>
+
+#cgi-bin directory =====================================
+
+#form.py
+#!/usr/local/bin/python
+ 
+import BaseHTTPServer
+import CGIHTTPServer
+import cgitb; cgitb.enable()  
+ 
+server = BaseHTTPServer.HTTPServer
+handler = CGIHTTPServer.CGIHTTPRequestHandler
+server_address = ("localhost", 8022)
+handler.cgi_directories = ["/cgi-bin"]
+httpd = server(server_address, handler)
+httpd.serve_forever()
+
+#test_post.py ------------------------------------------------------------------
+#!/usr/local/bin/python
+import cgi
+ 
+form = cgi.FieldStorage()
+ 
+val1 = form.getvalue('guess')
+ 
+print "Content-type: text/html\n"
+
+print "You entered: <br/>"
+print val1
+print "<br/><a href='http://localhost:8022/cgi-bin/form.py'>Try again</a>"
